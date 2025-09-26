@@ -33,87 +33,93 @@ export function PaperViewModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[95vw] h-[90vh] p-0 bg-background/95 backdrop-blur-xl border border-white/20">
-        {/* Modal Header with Paper Tabs */}
-        <div className="flex items-center justify-between p-4 border-b border-white/10 bg-card/60">
-          <div className="flex items-center space-x-4 flex-1">
-            <div className="p-2 rounded-lg bg-gradient-primary/10">
-              <FileText className="h-5 w-5 text-research-primary" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h2 className="text-lg font-bold text-foreground truncate">Paper Viewer</h2>
-              <p className="text-sm text-muted-foreground">Research Analysis</p>
-            </div>
-          </div>
-          
-          <Button
-            variant="ghost"
-            onClick={onClose}
-            className="h-8 w-8 p-0 hover:bg-muted/50"
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </div>
-
-        {/* Paper Navigation Tabs */}
-        <div className="border-b border-white/10 bg-muted/20">
-          <ScrollArea className="w-full">
-            <div className="flex p-2 gap-2 min-w-max">
-              {allPapers.map((paper, index) => (
-                <Button
-                  key={index}
-                  variant={selectedPaper === paper ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => onPaperSelect(paper)}
-                  className={`min-w-[200px] justify-start text-left ${
-                    selectedPaper === paper 
-                      ? "bg-gradient-primary text-white shadow-glow" 
-                      : "hover:bg-muted/50"
-                  }`}
-                >
-                  <div className="truncate">
-                    <div className="font-medium text-xs truncate">
-                      {paper.title.substring(0, 40)}...
-                    </div>
-                    <div className="text-xs opacity-70 truncate">
-                      {paper.authors.split(',')[0]}
-                    </div>
-                  </div>
-                </Button>
-              ))}
-            </div>
-          </ScrollArea>
-        </div>
-
-        {/* Split View Content */}
-        <div className="flex flex-1 h-full overflow-hidden">
-          {/* LLM Response - Left Side */}
-          <div className="w-1/2 border-r border-white/10 flex flex-col bg-card/30">
-            <div className="p-4 border-b border-white/10 bg-gradient-to-r from-muted/30 to-transparent">
-              <div className="flex items-center space-x-2">
-                <Lightbulb className="h-5 w-5 text-research-primary" />
-                <h3 className="font-bold text-foreground">AI Analysis</h3>
+      <DialogContent 
+        className="max-w-[95vw] h-[90vh] p-0 bg-background/95 backdrop-blur-xl border border-white/20 [&>button]:hidden"
+      >
+        {/* Compact Header with Title and Navigation Tabs */}
+        <div className="border-b border-white/10 bg-card/60">
+          {/* Title Bar */}
+          <div className="flex items-center justify-between px-4 py-2">
+            <div className="flex items-center space-x-3">
+              <div className="p-1.5 rounded-lg bg-gradient-primary/10">
+                <FileText className="h-4 w-4 text-research-primary" />
+              </div>
+              <div>
+                <h2 className="text-sm font-bold text-foreground">Paper Viewer</h2>
               </div>
             </div>
             
-            <ScrollArea className="flex-1 p-6">
-              <div className="prose prose-slate max-w-none">
-                <p className="text-foreground leading-relaxed whitespace-pre-wrap">
-                  {llmResponse}
-                </p>
+            <Button
+              variant="ghost"
+              onClick={onClose}
+              className="h-7 w-7 p-0 hover:bg-muted/50"
+            >
+              <X className="h-3.5 w-3.5" />
+            </Button>
+          </div>
+
+          {/* Paper Navigation Tabs - Centered */}
+          <div className="bg-muted/20">
+            <ScrollArea className="w-full">
+              <div className="flex justify-center p-2 gap-2 min-w-max">
+                {allPapers.map((paper, index) => (
+                  <Button
+                    key={index}
+                    variant={selectedPaper === paper ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => onPaperSelect(paper)}
+                    className={`min-w-[180px] justify-start text-left ${
+                      selectedPaper === paper 
+                        ? "bg-gradient-primary text-white shadow-glow" 
+                        : "hover:bg-research-primary/10 hover:text-research-primary hover:border-research-primary/20 transition-all duration-200"
+                    }`}
+                  >
+                    <div className="truncate">
+                      <div className="font-medium text-xs truncate">
+                        {paper.title.substring(0, 35)}...
+                      </div>
+                      <div className="text-xs opacity-70 truncate">
+                        {paper.authors.split(',')[0]}
+                      </div>
+                    </div>
+                  </Button>
+                ))}
+              </div>
+            </ScrollArea>
+          </div>
+        </div>
+
+        {/* Split View Content - Now properly scrollable */}
+        <div className="flex flex-1 overflow-hidden">
+          {/* LLM Response - Left Side */}
+          <div className="w-1/2 border-r border-white/10 flex flex-col bg-card/30">
+            <div className="p-3 border-b border-white/10 bg-gradient-to-r from-muted/30 to-transparent flex-shrink-0">
+              <div className="flex items-center space-x-2">
+                <Lightbulb className="h-4 w-4 text-research-primary" />
+                <h3 className="font-bold text-foreground text-sm">AI Analysis</h3>
+              </div>
+            </div>
+            
+            <ScrollArea className="flex-1">
+              <div className="p-4">
+                <div className="prose prose-slate max-w-none prose-sm">
+                  <p className="text-foreground leading-relaxed whitespace-pre-wrap text-sm">
+                    {llmResponse}
+                  </p>
+                </div>
               </div>
             </ScrollArea>
           </div>
 
           {/* Paper Viewer - Right Side */}
           <div className="w-1/2 flex flex-col bg-background/30">
-            <div className="p-4 border-b border-white/10 bg-gradient-to-r from-muted/30 to-transparent">
+            <div className="p-3 border-b border-white/10 bg-gradient-to-r from-muted/30 to-transparent flex-shrink-0">
               <div className="flex items-center justify-between">
-                <div>
-                  <h4 className="font-bold text-foreground text-sm leading-tight mb-1">
+                <div className="flex-1 min-w-0 pr-3">
+                  <h4 className="font-bold text-foreground text-sm leading-tight mb-1 truncate">
                     {selectedPaper.title}
                   </h4>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-muted-foreground truncate">
                     {selectedPaper.authors}
                   </p>
                 </div>
@@ -121,7 +127,7 @@ export function PaperViewModal({
                   variant="outline"
                   size="sm"
                   onClick={() => window.open(selectedPaper.url, '_blank')}
-                  className="h-8 gap-1"
+                  className="h-7 gap-1 flex-shrink-0"
                 >
                   <ExternalLink className="h-3 w-3" />
                   Open
@@ -129,7 +135,7 @@ export function PaperViewModal({
               </div>
             </div>
             
-            <div className="flex-1 bg-background/50">
+            <div className="flex-1 bg-background/50 overflow-hidden">
               <iframe
                 src={selectedPaper.url}
                 className="w-full h-full border-0"
