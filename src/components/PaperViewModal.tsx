@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, FileText, Lightbulb, ExternalLink } from "lucide-react";
+import { X, FileText, Lightbulb, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -29,15 +29,17 @@ export function PaperViewModal({
   onPaperSelect, 
   llmResponse 
 }: PaperViewModalProps) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  
   if (!selectedPaper) return null;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
-        className="max-w-[95vw] h-[90vh] p-0 bg-background/95 backdrop-blur-xl border border-white/20 [&>button]:hidden"
+        className="max-w-[98vw] h-[98vh] p-0 bg-background/95 backdrop-blur-xl border border-white/20 [&>button]:hidden flex flex-col"
       >
         {/* Compact Header with Title and Navigation Tabs */}
-        <div className="border-b border-white/10 bg-card/60">
+        <div className="border-b border-white/10 bg-card/60 flex-shrink-0">
           {/* Title Bar */}
           <div className="flex items-center justify-between px-4 py-2">
             <div className="flex items-center space-x-3">
@@ -61,7 +63,7 @@ export function PaperViewModal({
           {/* Paper Navigation Tabs - Centered */}
           <div className="bg-muted/20">
             <ScrollArea className="w-full">
-              <div className="flex justify-center p-2 gap-2 min-w-max">
+              <div className="flex justify-center px-2 py-1 gap-2 min-w-max">
                 {allPapers.map((paper, index) => (
                   <Button
                     key={index}
@@ -89,32 +91,56 @@ export function PaperViewModal({
           </div>
         </div>
 
-        {/* Split View Content - Now properly scrollable */}
-        <div className="flex flex-1 overflow-hidden">
-          {/* LLM Response - Left Side */}
-          <div className="w-1/2 border-r border-white/10 flex flex-col bg-card/30">
-            <div className="p-3 border-b border-white/10 bg-gradient-to-r from-muted/30 to-transparent flex-shrink-0">
-              <div className="flex items-center space-x-2">
-                <Lightbulb className="h-4 w-4 text-research-primary" />
-                <h3 className="font-bold text-foreground text-sm">AI Analysis</h3>
-              </div>
-            </div>
-            
-            <ScrollArea className="flex-1">
-              <div className="p-4">
-                <div className="prose prose-slate max-w-none prose-sm">
-                  <p className="text-foreground leading-relaxed whitespace-pre-wrap text-sm">
-                    {llmResponse}
-                  </p>
+        {/* Split View Content with Collapsible Sidebar */}
+        <div className="flex flex-1 min-h-0 overflow-hidden relative">
+          {/* Collapsible LLM Response - Left Side */}
+          {sidebarOpen && (
+            <div className="w-2/5 border-r border-white/10 flex flex-col bg-card/30">
+              <div className="p-3 border-b border-white/10 bg-gradient-to-r from-muted/30 to-transparent flex-shrink-0">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Lightbulb className="h-4 w-4 text-research-primary" />
+                    <h3 className="font-bold text-foreground text-sm">AI Analysis</h3>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSidebarOpen(false)}
+                    className="h-6 w-6 p-0"
+                  >
+                    <ChevronLeft className="h-3 w-3" />
+                  </Button>
                 </div>
               </div>
-            </ScrollArea>
-          </div>
+              
+              <ScrollArea className="flex-1">
+                <div className="p-4">
+                  <div className="prose prose-slate max-w-none prose-sm">
+                    <p className="text-foreground leading-relaxed whitespace-pre-wrap text-sm">
+                      {llmResponse}
+                    </p>
+                  </div>
+                </div>
+              </ScrollArea>
+            </div>
+          )}
 
           {/* Paper Viewer - Right Side */}
-          <div className="w-1/2 flex flex-col bg-background/30">
+          <div className={`${sidebarOpen ? 'w-3/5' : 'w-full'} flex flex-col bg-background/30 transition-all duration-300`}>
             <div className="p-3 border-b border-white/10 bg-gradient-to-r from-muted/30 to-transparent flex-shrink-0">
               <div className="flex items-center justify-between">
+                {!sidebarOpen && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSidebarOpen(true)}
+                    className="h-7 gap-1 mr-3"
+                  >
+                    <ChevronRight className="h-3 w-3" />
+                    <Lightbulb className="h-3 w-3" />
+                    <span className="text-xs">AI Analysis</span>
+                  </Button>
+                )}
                 <div className="flex-1 min-w-0 pr-3">
                   <h4 className="font-bold text-foreground text-sm leading-tight mb-1 truncate">
                     {selectedPaper.title}
@@ -135,12 +161,15 @@ export function PaperViewModal({
               </div>
             </div>
             
-            <div className="flex-1 bg-background/50 overflow-hidden">
-              <iframe
-                src={selectedPaper.url}
-                className="w-full h-full border-0"
-                title={selectedPaper.title}
-              />
+            <div className="flex-1 bg-background/50 min-h-0 p-3">
+              <div className="w-full h-full bg-white rounded-lg overflow-hidden shadow-inner">
+                <iframe
+                  src={selectedPaper.url}
+                  className="w-full h-full border-0 rounded-lg"
+                  title={selectedPaper.title}
+                  style={{ height: '100%', width: '100%' }}
+                />
+              </div>
             </div>
           </div>
         </div>
