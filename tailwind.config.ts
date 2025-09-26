@@ -57,6 +57,27 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        research: {
+          primary: "hsl(var(--research-primary))",
+          secondary: "hsl(var(--research-secondary))",
+          neutral: "hsl(var(--research-neutral))",
+          success: "hsl(var(--research-success))",
+          warning: "hsl(var(--research-warning))",
+        },
+      },
+      backgroundImage: {
+        "gradient-primary": "var(--gradient-primary)",
+        "gradient-secondary": "var(--gradient-secondary)",
+        "gradient-loading": "var(--gradient-loading)",
+      },
+      boxShadow: {
+        research: "var(--shadow-research)",
+        card: "var(--shadow-card)",
+        float: "var(--shadow-float)",
+      },
+      transitionTimingFunction: {
+        smooth: "var(--transition-smooth)",
+        bounce: "var(--transition-bounce)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,10 +101,50 @@ export default {
             height: "0",
           },
         },
+        "loading-pulse": {
+          "0%, 100%": {
+            opacity: "0.3",
+            transform: "scale(1)",
+          },
+          "50%": {
+            opacity: "1",
+            transform: "scale(1.02)",
+          },
+        },
+        "loading-slide": {
+          "0%": {
+            transform: "translateX(-100%)",
+          },
+          "100%": {
+            transform: "translateX(100%)",
+          },
+        },
+        "fade-in-up": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(20px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "research-glow": {
+          "0%, 100%": {
+            boxShadow: "0 0 20px hsl(var(--research-primary) / 0.3)",
+          },
+          "50%": {
+            boxShadow: "0 0 30px hsl(var(--research-primary) / 0.6)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "loading-pulse": "loading-pulse 2s ease-in-out infinite",
+        "loading-slide": "loading-slide 2s ease-in-out infinite",
+        "fade-in-up": "fade-in-up 0.5s ease-out",
+        "research-glow": "research-glow 3s ease-in-out infinite",
       },
     },
   },
