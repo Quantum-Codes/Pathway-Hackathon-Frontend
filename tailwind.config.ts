@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
 
 export default {
   darkMode: ["class"],
@@ -13,6 +14,19 @@ export default {
       },
     },
     extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            color: "hsl(var(--foreground))",
+            a: { color: "hsl(var(--primary))" },
+            h1: { color: "hsl(var(--foreground))" },
+            h2: { color: "hsl(var(--foreground))" },
+            h3: { color: "hsl(var(--foreground))" },
+            strong: { color: "hsl(var(--foreground))" },
+            code: { color: "hsl(var(--foreground))" },
+          },
+        },
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -148,5 +162,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), typography],
 } satisfies Config;

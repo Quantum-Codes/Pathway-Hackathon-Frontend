@@ -9,6 +9,7 @@ import { CollapsiblePaperSidebar } from "@/components/CollapsiblePaperSidebar";
 import { PaperViewModal } from "@/components/PaperViewModal";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface ArxivPaperValue {
   id: string;
@@ -345,7 +346,7 @@ export default function Results() {
                   <div className="h-1 w-20 bg-gradient-primary rounded-full shadow-glow"></div>
                 </div>
                 <div className="prose prose-slate max-w-none dark:prose-invert">
-                  <ReactMarkdown>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
                     {response.message}
                   </ReactMarkdown>
                 </div>
