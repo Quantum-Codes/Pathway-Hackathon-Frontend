@@ -9,7 +9,23 @@ import { CollapsiblePaperSidebar } from "@/components/CollapsiblePaperSidebar";
 import { PaperViewModal } from "@/components/PaperViewModal";
 import { useToast } from "@/hooks/use-toast";
 
+interface ArxivPaperValue {
+  id: string;
+  title: string;
+  abstract: string;
+  authors: string[];
+  similarity_score: number;
+  url: string;
+  primary_category: string;
+  file_path: string;
+  matched_keywords: string[];
+}
+
 interface ArxivPaper {
+  _value: ArxivPaperValue;
+}
+
+interface ArxivPaperFlat {
   title: string;
   url: string;
   authors: string;
@@ -19,6 +35,7 @@ interface ArxivPaper {
 interface ApiResponse {
   message: string;
   papers: ArxivPaper[];
+  flatPapers?: ArxivPaperFlat[];
 }
 
 export default function Results() {
@@ -27,7 +44,7 @@ export default function Results() {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState<ApiResponse | null>(null);
-  const [selectedPaper, setSelectedPaper] = useState<ArxivPaper | null>(null);
+  const [selectedPaper, setSelectedPaper] = useState<ArxivPaperFlat | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { toast } = useToast();
@@ -54,26 +71,59 @@ export default function Results() {
           message: "Admin mode activated. This is a mock response demonstrating the research assistant interface. The system would normally analyze your query, search through academic papers, and provide AI-powered insights with relevant citations from arXiv and other academic databases.",
           papers: [
             {
-              title: "Sample Research Paper: Advanced Machine Learning Techniques",
-              url: "https://arxiv.org/pdf/2301.00001",
-              authors: "Dr. Jane Smith, Prof. John Doe",
-              abstract: "This paper explores cutting-edge machine learning methodologies and their applications in real-world scenarios. We present novel algorithms and demonstrate their effectiveness across multiple domains."
+              _value: {
+                id: "2301.00001",
+                title: "Sample Research Paper: Advanced Machine Learning Techniques",
+                url: "https://arxiv.org/pdf/2301.00001",
+                authors: ["Dr. Jane Smith", "Prof. John Doe"],
+                abstract: "This paper explores cutting-edge machine learning methodologies and their applications in real-world scenarios. We present novel algorithms and demonstrate their effectiveness across multiple domains.",
+                similarity_score: 0.95,
+                primary_category: "cs.LG",
+                file_path: "papers_text/2301.00001.txt",
+                matched_keywords: ["machine learning", "algorithms"]
+              }
             },
             {
-              title: "Quantum Computing Applications in Modern Research",
-              url: "https://arxiv.org/pdf/2301.00002", 
-              authors: "Dr. Alice Johnson, Dr. Bob Wilson",
-              abstract: "An comprehensive overview of quantum computing applications in contemporary research, including optimization problems, cryptography, and simulation of quantum systems."
+              _value: {
+                id: "2301.00002",
+                title: "Quantum Computing Applications in Modern Research",
+                url: "https://arxiv.org/pdf/2301.00002",
+                authors: ["Dr. Alice Johnson", "Dr. Bob Wilson"],
+                abstract: "An comprehensive overview of quantum computing applications in contemporary research, including optimization problems, cryptography, and simulation of quantum systems.",
+                similarity_score: 0.92,
+                primary_category: "quant-ph",
+                file_path: "papers_text/2301.00002.txt",
+                matched_keywords: ["quantum computing", "cryptography"]
+              }
             },
             {
-              title: "Neural Networks and Deep Learning: A Systematic Review",
-              url: "https://arxiv.org/pdf/2301.00003",
-              authors: "Prof. Sarah Chen, Dr. Michael Brown",
-              abstract: "This systematic review examines the evolution of neural networks and deep learning architectures, analyzing their impact across various fields of study."
+              _value: {
+                id: "2301.00003",
+                title: "Neural Networks and Deep Learning: A Systematic Review",
+                url: "https://arxiv.org/pdf/2301.00003",
+                authors: ["Prof. Sarah Chen", "Dr. Michael Brown"],
+                abstract: "This systematic review examines the evolution of neural networks and deep learning architectures, analyzing their impact across various fields of study.",
+                similarity_score: 0.89,
+                primary_category: "cs.LG",
+                file_path: "papers_text/2301.00003.txt",
+                matched_keywords: ["neural networks", "deep learning"]
+              }
             }
           ]
         };
-        setResponse(mockData);
+        
+        // Transform mock data too
+        const transformedMockData = {
+          ...mockData,
+          flatPapers: mockData.papers?.map(paper => ({
+            title: paper._value.title,
+            url: paper._value.url,
+            authors: paper._value.authors.join(', '),
+            abstract: paper._value.abstract
+          })) || []
+        };
+        
+        setResponse(transformedMockData);
         setIsLoading(false);
         toast({
           title: "Admin Demo Complete!",
@@ -97,7 +147,19 @@ export default function Results() {
       }
 
       const data: ApiResponse = await res.json();
-      setResponse(data);
+      
+      // Transform papers to flat structure for easier use
+      const transformedData = {
+        ...data,
+        flatPapers: data.papers?.map(paper => ({
+          title: paper._value.title,
+          url: paper._value.url,
+          authors: paper._value.authors.join(', '),
+          abstract: paper._value.abstract
+        })) || []
+      };
+      
+      setResponse(transformedData);
       
       toast({
         title: "Research Complete!",
@@ -136,7 +198,7 @@ export default function Results() {
     }
   };
 
-  const handlePaperClick = (paper: ArxivPaper) => {
+  const handlePaperClick = (paper: ArxivPaperFlat) => {
     setSelectedPaper(paper);
     setIsModalOpen(true);
   };
@@ -226,7 +288,7 @@ export default function Results() {
             {!sidebarCollapsed && (
               <div className="lg:col-span-1">
                 <CollapsiblePaperSidebar
-                  papers={response.papers || []}
+                  papers={response.flatPapers || []}
                   onPaperClick={handlePaperClick}
                 />
               </div>
@@ -240,7 +302,7 @@ export default function Results() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         selectedPaper={selectedPaper}
-        allPapers={response?.papers || []}
+        allPapers={response?.flatPapers || []}
         onPaperSelect={setSelectedPaper}
         llmResponse={response?.message || ""}
       />
