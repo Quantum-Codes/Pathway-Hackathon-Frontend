@@ -8,6 +8,7 @@ import { SimpleLoadingAnimation } from "@/components/SimpleLoadingAnimation";
 import { CollapsiblePaperSidebar } from "@/components/CollapsiblePaperSidebar";
 import { PaperViewModal } from "@/components/PaperViewModal";
 import { useToast } from "@/hooks/use-toast";
+import ReactMarkdown from "react-markdown";
 
 interface ArxivPaperValue {
   id: string;
@@ -68,45 +69,112 @@ export default function Results() {
     if (searchQuery.toLowerCase().trim() === "admin") {
       setTimeout(() => {
         const mockData: ApiResponse = {
-          message: "Admin mode activated. This is a mock response demonstrating the research assistant interface. The system would normally analyze your query, search through academic papers, and provide AI-powered insights with relevant citations from arXiv and other academic databases.",
+          message: "## Answer to: rag\n\n### Executive Summary\nBased on analysis of 5 relevant documents related to your query about rag, with focus on: Retrieval-Augmented Generation, RAG, Information Retrieval, Natural Language Processing.\n\n### Key Insights\nThis is an interdisciplinary topic spanning \"cs.CL\", \"cs.IR\" domains.\n\nThe most relevant aspects identified include: \"information retrieval\", \"natural language processing\", \"rag\", \"retrieval-augmented generation\".\n\nCommon themes across the research include: retrieval, augmented, generation, language, llms.\n\nNotable researchers in this area include: \"Anas Neumann\", \"Shailja Gupta\", \"Rajesh Ranjan\", \"Gautam B\", \"Anupam Purwar\".\n\n### Supporting Documents\n\nDocument 1: \"A Systematic Review of Key Retrieval-Augmented Generation (RAG) Systems:   Progress, Gaps, and Future Directions\"\nRelevance Score: 0.299\nAbstract: \"Retrieval-Augmented Generation (RAG) represents a major advancement in natural language processing (NLP), combining large language models (LLMs) with information retrieval systems to enhance factual grounding, accuracy, and contextual relevance. This paper presents a comprehensive systematic rev...\nMatched Terms: \"retrieval-augmented generation\", \"rag\", \"information retrieval\", \"natural language processing\"\n\nDocument 2: \"A Comprehensive Survey of Retrieval-Augmented Generation (RAG):   Evolution, Current Landscape and Future Directions\"\nRelevance Score: 0.284\nAbstract: \"This paper presents a comprehensive study of Retrieval-Augmented Generation (RAG), tracing its evolution from foundational concepts to the current state of the art. RAG combines retrieval mechanisms with generative language models to enhance the accuracy of outputs, addressing key limitations of...\nMatched Terms: \"retrieval-augmented generation\", \"rag\", \"natural language processing\"\n\nDocument 3: \"RAG-Fusion: a New Take on Retrieval-Augmented Generation\"\nRelevance Score: 0.269\nAbstract: \"Infineon has identified a need for engineers, account managers, and customers to rapidly obtain product information. This problem is traditionally addressed with retrieval-augmented generation (RAG) chatbots, but in this study, I evaluated the use of the newly popularized RAG-Fusion method. RAG-...\nMatched Terms: \"retrieval-augmented generation\", \"rag\", \"natural language processing\"\n\nDocument 4: \"An Agile Method for Implementing Retrieval Augmented Generation Tools in   Industrial SMEs\"\nRelevance Score: 0.255\nAbstract: \"Retrieval-Augmented Generation (RAG) has emerged as a powerful solution to mitigate the limitations of Large Language Models (LLMs), such as hallucinations and outdated knowledge. However, deploying RAG-based tools in Small and Medium Enterprises (SMEs) remains a challenge due to their limited r...\nMatched Terms: \"retrieval-augmented generation\", \"rag\", \"natural language processing\"\n\nDocument 5: \"Evaluating the Efficacy of Open-Source LLMs in Enterprise-Specific RAG   Systems: A Comparative Study of Performance and Scalability\"\nRelevance Score: 0.245\nAbstract: \"This paper presents an analysis of open-source large language models (LLMs) and their application in Retrieval-Augmented Generation (RAG) tasks, specific for enterprise-specific data sets scraped from their websites. With the increasing reliance on LLMs in natural language processing, it is cruc...\nMatched Terms: \"retrieval-augmented generation\", \"rag\", \"natural language processing\"\n\n### Conclusion\nThe 5 retrieved documents provide comprehensive coverage of 'rag', spanning multiple research perspectives and methodological approaches. This research spans \"cs.CL\", \"cs.IR\" domains, indicating the interdisciplinary nature of the topic. The focus on Retrieval-Augmented Generation, RAG, Information Retrieval, Natural Language Processing appears well-supported by the current literature, with documents directly addressing these concepts. Key research includes work on \"\"A Systematic Review of Key Retrieval-Augmented Generation (...\", demonstrating active development in this area. \n\n### For Further Research\nConsider exploring the full text of the most relevant documents above, \nparticularly those with the highest relevance scores. \nYou may also want to search for related terms such as: transformers, \"retrieval-augmented generation\", BERT, GPT, language models.",
           papers: [
             {
               _value: {
-                id: "2301.00001",
-                title: "Sample Research Paper: Advanced Machine Learning Techniques",
-                url: "https://arxiv.org/pdf/2301.00001",
-                authors: ["Dr. Jane Smith", "Prof. John Doe"],
-                abstract: "This paper explores cutting-edge machine learning methodologies and their applications in real-world scenarios. We present novel algorithms and demonstrate their effectiveness across multiple domains.",
-                similarity_score: 0.95,
-                primary_category: "cs.LG",
-                file_path: "papers_text/2301.00001.txt",
-                matched_keywords: ["machine learning", "algorithms"]
+                id: "2507.18910v1",
+                title: "A Systematic Review of Key Retrieval-Augmented Generation (RAG) Systems:   Progress, Gaps, and Future Directions",
+                abstract: "Retrieval-Augmented Generation (RAG) represents a major advancement in natural language processing (NLP), combining large language models (LLMs) with information retrieval systems to enhance factual grounding, accuracy, and contextual relevance. This paper presents a comprehensive systematic review of RAG, tracing its evolution from early developments in open domain question answering to recent state-of-the-art implementations across diverse applications. The review begins by outlining the motivations behind RAG, particularly its ability to mitigate hallucinations and outdated knowledge in parametric models. Core technical components-retrieval mechanisms, sequence-to-sequence generation models, and fusion strategies are examined in detail. A year-by-year analysis highlights key milestones and research trends, providing insight into RAG's rapid growth. The paper further explores the deployment of RAG in enterprise systems, addressing practical challenges related to retrieval of proprietary data, security, and scalability. A comparative evaluation of RAG implementations is conducted, benchmarking performance on retrieval accuracy, generation fluency, latency, and computational efficiency. Persistent challenges such as retrieval quality, privacy concerns, and integration overhead are critically assessed. Finally, the review highlights emerging solutions, including hybrid retrieval approaches, privacy-preserving techniques, optimized fusion strategies, and agentic RAG architectures. These innovations point toward a future of more reliable, efficient, and context-aware knowledge-intensive NLP systems.",
+                authors: [
+                  "Agada Joseph Oche",
+                  "Ademola Glory Folashade",
+                  "Tirthankar Ghosal",
+                  "Arpan Biswas"
+                ],
+                similarity_score: 0.29929313949169933,
+                url: "http://arxiv.org/abs/2507.18910v1",
+                primary_category: "cs.CL",
+                file_path: "papers_text/2507.18910v1.txt",
+                matched_keywords: [
+                  "retrieval-augmented generation",
+                  "rag",
+                  "information retrieval",
+                  "natural language processing"
+                ]
               }
             },
             {
               _value: {
-                id: "2301.00002",
-                title: "Quantum Computing Applications in Modern Research",
-                url: "https://arxiv.org/pdf/2301.00002",
-                authors: ["Dr. Alice Johnson", "Dr. Bob Wilson"],
-                abstract: "An comprehensive overview of quantum computing applications in contemporary research, including optimization problems, cryptography, and simulation of quantum systems.",
-                similarity_score: 0.92,
-                primary_category: "quant-ph",
-                file_path: "papers_text/2301.00002.txt",
-                matched_keywords: ["quantum computing", "cryptography"]
+                id: "2410.12837v1",
+                title: "A Comprehensive Survey of Retrieval-Augmented Generation (RAG):   Evolution, Current Landscape and Future Directions",
+                abstract: "This paper presents a comprehensive study of Retrieval-Augmented Generation (RAG), tracing its evolution from foundational concepts to the current state of the art. RAG combines retrieval mechanisms with generative language models to enhance the accuracy of outputs, addressing key limitations of LLMs. The study explores the basic architecture of RAG, focusing on how retrieval and generation are integrated to handle knowledge-intensive tasks. A detailed review of the significant technological advancements in RAG is provided, including key innovations in retrieval-augmented language models and applications across various domains such as question-answering, summarization, and knowledge-based tasks. Recent research breakthroughs are discussed, highlighting novel methods for improving retrieval efficiency. Furthermore, the paper examines ongoing challenges such as scalability, bias, and ethical concerns in deployment. Future research directions are proposed, focusing on improving the robustness of RAG models, expanding the scope of application of RAG models, and addressing societal implications. This survey aims to serve as a foundational resource for researchers and practitioners in understanding the potential of RAG and its trajectory in natural language processing.",
+                authors: [
+                  "Shailja Gupta",
+                  "Rajesh Ranjan",
+                  "Surya Narayan Singh"
+                ],
+                similarity_score: 0.28409249784249946,
+                url: "http://arxiv.org/abs/2410.12837v1",
+                primary_category: "cs.CL",
+                file_path: "papers_text/2410.12837v1.txt",
+                matched_keywords: [
+                  "retrieval-augmented generation",
+                  "rag",
+                  "natural language processing"
+                ]
               }
             },
             {
               _value: {
-                id: "2301.00003",
-                title: "Neural Networks and Deep Learning: A Systematic Review",
-                url: "https://arxiv.org/pdf/2301.00003",
-                authors: ["Prof. Sarah Chen", "Dr. Michael Brown"],
-                abstract: "This systematic review examines the evolution of neural networks and deep learning architectures, analyzing their impact across various fields of study.",
-                similarity_score: 0.89,
-                primary_category: "cs.LG",
-                file_path: "papers_text/2301.00003.txt",
-                matched_keywords: ["neural networks", "deep learning"]
+                id: "2402.03367v2",
+                title: "RAG-Fusion: a New Take on Retrieval-Augmented Generation",
+                abstract: "Infineon has identified a need for engineers, account managers, and customers to rapidly obtain product information. This problem is traditionally addressed with retrieval-augmented generation (RAG) chatbots, but in this study, I evaluated the use of the newly popularized RAG-Fusion method. RAG-Fusion combines RAG and reciprocal rank fusion (RRF) by generating multiple queries, reranking them with reciprocal scores and fusing the documents and scores. Through manually evaluating answers on accuracy, relevance, and comprehensiveness, I found that RAG-Fusion was able to provide accurate and comprehensive answers due to the generated queries contextualizing the original query from various perspectives. However, some answers strayed off topic when the generated queries' relevance to the original query is insufficient. This research marks significant progress in artificial intelligence (AI) and natural language processing (NLP) applications and demonstrates transformations in a global and multi-industry context.",
+                authors: [
+                  "Zackary Rackauckas"
+                ],
+                similarity_score: 0.26888617959879,
+                url: "http://arxiv.org/abs/2402.03367v2",
+                primary_category: "cs.IR",
+                file_path: "papers_text/2402.03367v2.txt",
+                matched_keywords: [
+                  "retrieval-augmented generation",
+                  "rag",
+                  "natural language processing"
+                ]
+              }
+            },
+            {
+              _value: {
+                id: "2508.21024v1",
+                title: "An Agile Method for Implementing Retrieval Augmented Generation Tools in   Industrial SMEs",
+                abstract: "Retrieval-Augmented Generation (RAG) has emerged as a powerful solution to mitigate the limitations of Large Language Models (LLMs), such as hallucinations and outdated knowledge. However, deploying RAG-based tools in Small and Medium Enterprises (SMEs) remains a challenge due to their limited resources and lack of expertise in natural language processing (NLP). This paper introduces EASI-RAG, Enterprise Application Support for Industrial RAG, a structured, agile method designed to facilitate the deployment of RAG systems in industrial SME contexts. EASI-RAG is based on method engineering principles and comprises well-defined roles, activities, and techniques. The method was validated through a real-world case study in an environmental testing laboratory, where a RAG tool was implemented to answer operators queries using data extracted from operational procedures. The system was deployed in under a month by a team with no prior RAG experience and was later iteratively improved based on user feedback. Results demonstrate that EASI-RAG supports fast implementation, high user adoption, delivers accurate answers, and enhances the reliability of underlying data. This work highlights the potential of RAG deployment in industrial SMEs. Future works include the need for generalization across diverse use cases and further integration with fine-tuned models.",
+                authors: [
+                  "Mathieu Bourdin",
+                  "Anas Neumann",
+                  "Thomas Paviot",
+                  "Robert Pellerin",
+                  "Samir Lamouri"
+                ],
+                similarity_score: 0.25531741871208413,
+                url: "http://arxiv.org/abs/2508.21024v1",
+                primary_category: "cs.CL",
+                file_path: "papers_text/2508.21024v1.txt",
+                matched_keywords: [
+                  "retrieval-augmented generation",
+                  "rag",
+                  "natural language processing"
+                ]
+              }
+            },
+            {
+              _value: {
+                id: "2406.11424v1",
+                title: "Evaluating the Efficacy of Open-Source LLMs in Enterprise-Specific RAG   Systems: A Comparative Study of Performance and Scalability",
+                abstract: "This paper presents an analysis of open-source large language models (LLMs) and their application in Retrieval-Augmented Generation (RAG) tasks, specific for enterprise-specific data sets scraped from their websites. With the increasing reliance on LLMs in natural language processing, it is crucial to evaluate their performance, accessibility, and integration within specific organizational contexts. This study examines various open-source LLMs, explores their integration into RAG frameworks using enterprise-specific data, and assesses the performance of different open-source embeddings in enhancing the retrieval and generation process. Our findings indicate that open-source LLMs, combined with effective embedding techniques, can significantly improve the accuracy and efficiency of RAG systems, offering a viable alternative to proprietary solutions for enterprises.",
+                authors: [
+                  "Gautam B",
+                  "Anupam Purwar"
+                ],
+                similarity_score: 0.24538043628024808,
+                url: "http://arxiv.org/abs/2406.11424v1",
+                primary_category: "cs.IR",
+                file_path: "papers_text/2406.11424v1.txt",
+                matched_keywords: [
+                  "retrieval-augmented generation",
+                  "rag",
+                  "natural language processing"
+                ]
               }
             }
           ]
@@ -117,7 +185,7 @@ export default function Results() {
           ...mockData,
           flatPapers: mockData.papers?.map(paper => ({
             title: paper._value.title,
-            url: paper._value.url,
+            url: paper._value.url.replace('/abs/', '/pdf/'),
             authors: paper._value.authors.join(', '),
             abstract: paper._value.abstract
           })) || []
@@ -153,7 +221,7 @@ export default function Results() {
         ...data,
         flatPapers: data.papers?.map(paper => ({
           title: paper._value.title,
-          url: paper._value.url,
+          url: paper._value.url.replace('/abs/', '/pdf/'),
           authors: paper._value.authors.join(', '),
           abstract: paper._value.abstract
         })) || []
@@ -276,10 +344,10 @@ export default function Results() {
                   </div>
                   <div className="h-1 w-20 bg-gradient-primary rounded-full shadow-glow"></div>
                 </div>
-                <div className="prose prose-slate max-w-none">
-                  <p className="text-foreground leading-relaxed whitespace-pre-wrap text-lg">
+                <div className="prose prose-slate max-w-none dark:prose-invert">
+                  <ReactMarkdown>
                     {response.message}
-                  </p>
+                  </ReactMarkdown>
                 </div>
               </Card>
             </div>
