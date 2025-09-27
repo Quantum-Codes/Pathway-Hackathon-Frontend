@@ -203,7 +203,7 @@ export default function Results() {
     }
 
     try {
-      const res = await fetch("https://pathway-hackathon-2025.onrender.com/prompt", {
+      const res = await fetch("http://localhost:8080/prompt", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
